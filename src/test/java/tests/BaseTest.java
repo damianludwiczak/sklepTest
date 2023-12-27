@@ -19,10 +19,8 @@ public class BaseTest {
         driver.get("https://skleptest.pl/");
     }
 
-//    @AfterMethod
-//    public void tearDown() {
+    @AfterMethod
+    public void tearDown() {
 //        driver.quit();
-//    }
-
-
+    }
 }

@@ -2,10 +2,13 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class MyAccountPage extends HomePage {
+
+    private WebDriver driver;
     @FindBy(id = "username")
     private WebElement usernameInput;
 
@@ -43,6 +46,7 @@ public class MyAccountPage extends HomePage {
     public MyAccountPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
     public void setUsername(String username) {
@@ -71,6 +75,9 @@ public class MyAccountPage extends HomePage {
     }
 
     public void setRegPassword(String password) {
+        Actions action = new Actions(driver);
+
+        action.moveToElement(regPasswordInput).click().perform();
         regPasswordInput.sendKeys(password);
     }
 
@@ -87,7 +94,7 @@ public class MyAccountPage extends HomePage {
     }
 
     public boolean isRegEmailLabelTextDisplayed() {
-        return regEmailLabel.isDisplayed();
+        return regEmailLabel.isDisplayed() & regEmailLabel.getText().contains("Password *");
     }
 
     public String getRegPasswordLabelText() {

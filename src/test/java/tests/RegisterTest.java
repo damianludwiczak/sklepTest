@@ -8,27 +8,26 @@ import pages.MyAccountPage;
 import java.util.Random;
 
 public class RegisterTest extends BaseTest {
+    private MyAccountPage myAccountPage;
+    private LoggedMyAccountPage loggedMyAccountPage;
+
     @Test
     public void registerUserWithValidInput() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        LoggedMyAccountPage loggedMyAccountPage = new LoggedMyAccountPage(driver);
-        Random random =new Random();
-
-        myAccountPage.clickAccountButton();
+        openAccountTab();
+        initLoggedMyAccountPage();
+        Random random = new Random();
 
         String username = "Testowy" + random.nextInt(10000);
         myAccountPage.setRegEmail(username + "@test.com");
         myAccountPage.setRegPassword(username + "@test.com");
         myAccountPage.performRegister();
 
-        Assert.assertTrue(loggedMyAccountPage.getWelcomeSub().contains(username));
+        Assert.assertEquals(loggedMyAccountPage.getWelcomeSub(), username);
     }
 
     @Test
-    public void registerWithEmailWithout() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-
-        myAccountPage.clickAccountButton();
+    public void registerWithEmailWhichDoesNotContain() {
+        openAccountTab();
 
         myAccountPage.setRegEmail("Testowy");
         myAccountPage.performRegister();
@@ -38,9 +37,7 @@ public class RegisterTest extends BaseTest {
 
     @Test
     public void registerWithInvalidEmail() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-
-        myAccountPage.clickAccountButton();
+        openAccountTab();
 
         myAccountPage.setRegEmail("Testowy@aaa");
         myAccountPage.setRegPassword("Testowy@aaa");
@@ -48,12 +45,28 @@ public class RegisterTest extends BaseTest {
 
         Assert.assertTrue(myAccountPage.getErrorMessage().contains(" Please provide a valid email address."));
     }
+    @Test
+    public void registerWithEmptyEmailField() {
+        openAccountTab();
+        myAccountPage.setRegPassword("Testowy123@");
+        myAccountPage.performRegister();
+
+        Assert.assertEquals(myAccountPage.getErrorMessage(), ("Error: Please provide a valid email address."));
+    }
 
     @Test
-    public void registerWithoutPassword() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
+    public void registerWithEmptyAllFields() {
+        openAccountTab();
+        myAccountPage.performRegister();
+        System.out.println(myAccountPage.getErrorMessage());
+        Assert.assertEquals(myAccountPage.getErrorMessage(), ("Error: Please provide a valid email address."));
+    }
 
-        myAccountPage.clickAccountButton();
+
+
+    @Test
+    public void registerWithEmptyPasswordField() {
+        openAccountTab();
 
         myAccountPage.setRegEmail("Testowy@test.com");
         myAccountPage.performRegister();
@@ -63,16 +76,23 @@ public class RegisterTest extends BaseTest {
 
     @Test
     public void registerWithWeakPassword() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-
-        myAccountPage.clickAccountButton();
+        openAccountTab();
 
         myAccountPage.setRegEmail("Testowy@test.com");
         myAccountPage.setRegPassword("Testowy12");
         myAccountPage.performRegister();
 
         Assert.assertTrue(myAccountPage.isRegPasswordLabelText() &
-                        myAccountPage.getRegPasswordLabelText().contains("Weak - Please enter a stronger password.") &
-                        !myAccountPage.isRegisterButtonAvailable());
+                myAccountPage.getRegPasswordLabelText().contains("Weak - Please enter a stronger password.") &
+                !myAccountPage.isRegisterButtonAvailable());
+    }
+
+    private void openAccountTab() {
+        myAccountPage = new MyAccountPage(driver);
+        myAccountPage.clickAccountButton();
+    }
+
+    private void initLoggedMyAccountPage() {
+        loggedMyAccountPage = new LoggedMyAccountPage(driver);
     }
 }
