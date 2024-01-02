@@ -6,7 +6,6 @@ import pages.LoggedMyAccountPage;
 import pages.MyAccountPage;
 
 public class LoginTest extends BaseTest {
-
     private MyAccountPage myAccountPage;
     private LoggedMyAccountPage loggedMyAccountPage;
     @Test

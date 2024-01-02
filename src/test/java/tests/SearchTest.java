@@ -39,7 +39,7 @@ public class SearchTest extends BaseTest {
     }
 
     @Test
-    public void searchWithKeywordWhichDoesntFound() {
+    public void searchWithKeywordWhichDoesNotFound() {
         String keyword = "test123";
         search(keyword);
 
