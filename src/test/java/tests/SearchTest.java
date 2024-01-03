@@ -51,7 +51,6 @@ public class SearchTest extends BaseTest {
     }
 
     private boolean isAllResultsContainKeyword(List<String> articlesTitles, String keyword) {
-        articlesTitles.add("mouse");
         for (String s : articlesTitles)
             if (!s.toUpperCase().contains(keyword.toUpperCase()))
                 return false;
