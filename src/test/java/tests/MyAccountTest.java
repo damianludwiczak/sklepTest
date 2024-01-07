@@ -26,7 +26,7 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test
-    public void registerWithEmailWhichDoesNotContain() {
+    public void registerWithEmailWhichDoesNotContainAtSign() {
         openAccountTab();
 
         myAccountPage.setRegEmail("Testowy");
@@ -91,6 +91,7 @@ public class RegisterTest extends BaseTest {
         myAccountPage = new MyAccountPage(driver);
         myAccountPage.clickAccountButton();
     }
+    // todo refactor
 
     private void initLoggedMyAccountPage() {
         loggedMyAccountPage = new LoggedMyAccountPage(driver);
