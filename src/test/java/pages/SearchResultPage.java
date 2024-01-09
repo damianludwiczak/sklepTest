@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SearchResultPage extends HomePage {
+public class SearchResultPage {
     @FindBy(css = "span[class='breadcrumb-leaf']")
     private WebElement searchSub;
 
@@ -19,7 +19,6 @@ public class SearchResultPage extends HomePage {
     private List<WebElement> listArticles;
 
     public SearchResultPage(WebDriver driver) {
-        super(driver);
         PageFactory.initElements(driver, this);
     }
 

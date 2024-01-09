@@ -3,8 +3,9 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class LoggedMyAccountPage extends HomePage {
+public class LoggedMyAccountPage {
     @FindBy(xpath = "//li[@class='woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active']//a")
     private WebElement dashboardLink;
 
@@ -30,7 +31,7 @@ public class LoggedMyAccountPage extends HomePage {
     private WebElement welcomeSub;
 
     public LoggedMyAccountPage(WebDriver driver) {
-        super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     public void clickDashboardLink() {

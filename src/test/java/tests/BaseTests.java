@@ -5,10 +5,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
-    protected WebDriver driver;
+public class BaseTests {
+    protected static WebDriver driver;
 
     @BeforeMethod
     public void setup() {
@@ -21,6 +22,13 @@ public class BaseTest {
 
     @AfterMethod
     public void tearDown() {
+        driver.close();
         driver.quit();
+    }
+
+    public static WebDriver getInstance() { // // TODO: 09.01.2024  
+        if (Objects.isNull(driver))
+            driver = new ChromeDriver();
+        return driver;
     }
 }

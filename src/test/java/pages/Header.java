@@ -6,7 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
+public class Header {
     @FindBy(xpath = "//div[@id='page']/header/div/div/div/ul/li/a[1]")
     private WebElement emailLink;
 
@@ -73,11 +73,10 @@ public class HomePage {
     private WebElement blogButton;
     private WebDriver driver;
 
-    public HomePage(WebDriver driver) {
+    public Header(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-
 
     public String getEmailText() {
         return emailLink.getText();

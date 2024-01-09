@@ -5,10 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import tests.BaseTests;
 
-public class MyAccountPage extends HomePage {
-
+public class MyAccountPage {
     private WebDriver driver;
+    private Actions actions;
     @FindBy(id = "username")
     private WebElement usernameInput;
 
@@ -42,11 +43,10 @@ public class MyAccountPage extends HomePage {
     @FindBy(css = "div[class='woocommerce-password-strength bad']")
     private WebElement regPasswordLabel;
 
-
     public MyAccountPage(WebDriver driver) {
-        super(driver);
         PageFactory.initElements(driver, this);
-        this.driver = driver;
+        this.driver = BaseTests.getInstance();
+        actions = new Actions(driver);
     }
 
     public void setUsername(String username) {
@@ -61,7 +61,7 @@ public class MyAccountPage extends HomePage {
         loginButton.click();
     }
 
-    public void setRememberMeChceckbox(boolean condition) {
+    public void setRememberMeCheckBox(boolean condition) {
         if (condition)
             rememberMeChceckbox.click();
     }
@@ -75,13 +75,12 @@ public class MyAccountPage extends HomePage {
     }
 
     public void setRegPassword(String password) {
-        Actions action = new Actions(driver);
-
-        action.moveToElement(regPasswordInput).click().perform();
+        actions.moveToElement(regPasswordInput).click().perform();
         regPasswordInput.sendKeys(password);
     }
 
     public void performRegister() {
+        actions.moveToElement(regPasswordInput).click().perform();
         regButton.click();
     }
 

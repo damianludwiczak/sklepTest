@@ -2,14 +2,15 @@ package tests;
 
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.Header;
 import pages.SearchResultPage;
 
 import java.util.List;
 
-public class SearchTest extends BaseTest {
-
+public class SearchTests extends BaseTests {
     private SoftAssert softAssert;
     private SearchResultPage searchResultPage;
+    private Header header;
 
     @Test
     public void isCorrectResultsDisplayed() {
@@ -60,7 +61,8 @@ public class SearchTest extends BaseTest {
     private void search(String keyword) {
         softAssert = new SoftAssert();
         searchResultPage = new SearchResultPage(driver);
-        searchResultPage.setSearchInput(keyword);
-        searchResultPage.clickSearchButton();
+        header = new Header(driver);
+        header.setSearchInput(keyword);
+        header.clickSearchButton();
     }
 }
