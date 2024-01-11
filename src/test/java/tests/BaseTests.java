@@ -26,7 +26,7 @@ public class BaseTests {
         driver.quit();
     }
 
-    public static WebDriver getInstance() { // // TODO: 09.01.2024  
+    public static WebDriver getInstance() {  // TODO: 09.01.2024
         if (Objects.isNull(driver))
             driver = new ChromeDriver();
         return driver;

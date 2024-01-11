@@ -13,7 +13,7 @@ public class SearchTests extends BaseTests {
     private Header header;
 
     @Test
-    public void isCorrectResultsDisplayed() {
+    public void isCorrectResultsDisplayedTest() {
         String keyword = "dress";
         search(keyword);
 
@@ -27,7 +27,7 @@ public class SearchTests extends BaseTests {
     }
 
     @Test
-    public void searchWithEmptyKeywordField() {
+    public void searchWithEmptyKeywordFieldTest() {
         search("");
 
         softAssert.assertTrue(searchResultPage.getSearchSubText().
@@ -40,7 +40,7 @@ public class SearchTests extends BaseTests {
     }
 
     @Test
-    public void searchWithKeywordWhichDoesNotFound() {
+    public void searchWithKeywordWhichDoesNotFoundTest() {
         String keyword = "test123";
         search(keyword);
 

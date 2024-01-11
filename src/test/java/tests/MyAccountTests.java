@@ -14,7 +14,7 @@ public class MyAccountTests extends BaseTests {
     private Header header;
 
 //    @BeforeClass // TODO: 09.01.2024
-    private void openAccountTab() {
+    private void init() {
         myAccountPage = new MyAccountPage(driver);
         header = new Header(driver);
         loggedMyAccountPage = new LoggedMyAccountPage(driver);
@@ -24,7 +24,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerUserWithValidInputTest() {
-        openAccountTab();
+        init();
 
         Random random = new Random();
 
@@ -38,7 +38,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmailWhichDoesNotContainAtSignTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setRegEmail("Testowy");
         myAccountPage.performRegister();
@@ -48,7 +48,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithInvalidEmailTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setRegEmail("Testowy@aaa");
         myAccountPage.setRegPassword("Testowy@aaa");
@@ -59,7 +59,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmptyEmailFieldTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setRegPassword("Testowy123@");
         myAccountPage.performRegister();
@@ -69,7 +69,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmptyAllFieldsTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.performRegister();
         Assert.assertEquals(myAccountPage.getErrorMessage(), ("Error: Please provide a valid email address."));
@@ -78,7 +78,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmptyPasswordFieldTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setRegEmail("Testowy@test.com");
         myAccountPage.performRegister();
@@ -88,7 +88,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithWeakPasswordTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setRegEmail("Testowy@test.com");
         myAccountPage.setRegPassword("Testowy12");
@@ -101,7 +101,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithInvalidPasswordTest() {
-        openAccountTab();
+        init();
 
         String login = "Testowy286@test.com";
 
@@ -115,7 +115,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithNonExistsUsernameTest() {
-        openAccountTab();
+        init();
 
         String login = "Testowy286121@test.com";
 
@@ -128,7 +128,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithEmptyUsernameFieldTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.performLogin();
         Assert.assertEquals(myAccountPage.getErrorMessage(), "Error: Username is required.");
@@ -136,7 +136,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithEmptyPasswordFieldTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setUsername("Testowy286@test.com");
         myAccountPage.performLogin();
@@ -146,7 +146,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithValidCredentialsTest() {
-        openAccountTab();
+        init();
 
         myAccountPage.setUsername("Testowy286@test.com");
         myAccountPage.setPassword("Testowy286@test.com");
