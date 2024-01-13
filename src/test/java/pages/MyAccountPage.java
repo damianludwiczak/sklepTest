@@ -6,6 +6,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import tests.BaseTests;
+import tests.DriverSingleton;
+
+import static tests.DriverSingleton.getDriver;
 
 public class MyAccountPage {
     private WebDriver driver;
@@ -43,10 +46,10 @@ public class MyAccountPage {
     @FindBy(css = "div[class='woocommerce-password-strength bad']")
     private WebElement regPasswordLabel;
 
-    public MyAccountPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = BaseTests.getInstance();
-        actions = new Actions(driver);
+    public MyAccountPage() {
+        PageFactory.initElements(getDriver(), this);
+        this.driver = getDriver();
+        actions = new Actions(getDriver());
     }
 
     public void setUsername(String username) {

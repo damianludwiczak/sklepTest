@@ -1,17 +1,18 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import static tests.DriverSingleton.getDriver;
 
 public class Header {
     @FindBy(xpath = "//div[@id='page']/header/div/div/div/ul/li/a[1]")
     private WebElement emailLink;
 
     @FindBy(id = "search-field-top-bar")
-    private WebElement seachInput;
+    private WebElement searchInput;
 
     @FindBy(id = "search-top-bar-submit")
     private WebElement searchButton;
@@ -71,11 +72,9 @@ public class Header {
     private WebElement contactButton;
     @FindBy(css = "a[href='https://skleptest.pl/tag/all/']")
     private WebElement blogButton;
-    private WebDriver driver;
 
-    public Header(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+    public Header() {
+        PageFactory.initElements(getDriver(), this);
     }
 
     public String getEmailText() {
@@ -83,7 +82,7 @@ public class Header {
     }
 
     public void setSearchInput(String keyword) {
-        seachInput.sendKeys(keyword);
+        searchInput.sendKeys(keyword);
     }
 
     public void clickSearchButton() {
@@ -115,7 +114,7 @@ public class Header {
     }
 
     public void chooseCategory(String category) {
-        Actions actions = new Actions(driver);
+        Actions actions = new Actions(getDriver());
         actions.moveToElement(categoriesButton).build().perform();
 
         switch (category) {

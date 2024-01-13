@@ -12,10 +12,17 @@ public class SearchTests extends BaseTests {
     private SearchResultPage searchResultPage;
     private Header header;
 
+    public SearchTests() {
+        softAssert = new SoftAssert();
+        searchResultPage = new SearchResultPage();
+        header = new Header();
+    }
+
     @Test
     public void isCorrectResultsDisplayedTest() {
         String keyword = "dress";
-        search(keyword);
+        header.setSearchInput(keyword);
+        header.clickSearchButton();
 
         softAssert.assertTrue(searchResultPage.getSearchTitleText().contains(keyword.toUpperCase()),
                 "Title doesn't contain keyword");
@@ -28,7 +35,8 @@ public class SearchTests extends BaseTests {
 
     @Test
     public void searchWithEmptyKeywordFieldTest() {
-        search("");
+        header.setSearchInput("");
+        header.clickSearchButton();
 
         softAssert.assertTrue(searchResultPage.getSearchSubText().
                 equalsIgnoreCase("Search:"), "Subtitle isn't empty");
@@ -42,7 +50,8 @@ public class SearchTests extends BaseTests {
     @Test
     public void searchWithKeywordWhichDoesNotFoundTest() {
         String keyword = "test123";
-        search(keyword);
+        header.setSearchInput(keyword);
+        header.clickSearchButton();
 
         softAssert.assertTrue(searchResultPage.getSearchTitleText().equalsIgnoreCase("Nothing Found"),
                 "Title is incorrect");
@@ -56,13 +65,5 @@ public class SearchTests extends BaseTests {
             if (!s.toUpperCase().contains(keyword.toUpperCase()))
                 return false;
         return true;
-    }
-
-    private void search(String keyword) {
-        softAssert = new SoftAssert();
-        searchResultPage = new SearchResultPage(driver);
-        header = new Header(driver);
-        header.setSearchInput(keyword);
-        header.clickSearchButton();
     }
 }

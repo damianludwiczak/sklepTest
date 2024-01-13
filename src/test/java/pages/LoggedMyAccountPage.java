@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static tests.DriverSingleton.getDriver;
+
 public class LoggedMyAccountPage {
     @FindBy(xpath = "//li[@class='woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard is-active']//a")
     private WebElement dashboardLink;
@@ -30,8 +32,8 @@ public class LoggedMyAccountPage {
     @FindBy(xpath = "//div[@class='woocommerce-MyAccount-content']/p/strong[1]")
     private WebElement welcomeSub;
 
-    public LoggedMyAccountPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+    public LoggedMyAccountPage() {
+        PageFactory.initElements(getDriver(), this);
     }
 
     public void clickDashboardLink() {

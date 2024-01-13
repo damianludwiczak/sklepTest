@@ -8,23 +8,22 @@ import pages.MyAccountPage;
 
 import java.util.Random;
 
+import static tests.DriverSingleton.getDriver;
+
 public class MyAccountTests extends BaseTests {
     private MyAccountPage myAccountPage;
     private LoggedMyAccountPage loggedMyAccountPage;
     private Header header;
 
-//    @BeforeClass // TODO: 09.01.2024
-    private void init() {
-        myAccountPage = new MyAccountPage(driver);
-        header = new Header(driver);
-        loggedMyAccountPage = new LoggedMyAccountPage(driver);
-
-        header.clickAccountButton();
+    public MyAccountTests() {
+        myAccountPage = new MyAccountPage();
+        header = new Header();
+        loggedMyAccountPage = new LoggedMyAccountPage();
     }
 
     @Test
     public void registerUserWithValidInputTest() {
-        init();
+        header.clickAccountButton();
 
         Random random = new Random();
 
@@ -38,7 +37,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmailWhichDoesNotContainAtSignTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setRegEmail("Testowy");
         myAccountPage.performRegister();
@@ -48,7 +47,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithInvalidEmailTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setRegEmail("Testowy@aaa");
         myAccountPage.setRegPassword("Testowy@aaa");
@@ -59,7 +58,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmptyEmailFieldTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setRegPassword("Testowy123@");
         myAccountPage.performRegister();
@@ -69,7 +68,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmptyAllFieldsTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.performRegister();
         Assert.assertEquals(myAccountPage.getErrorMessage(), ("Error: Please provide a valid email address."));
@@ -78,7 +77,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithEmptyPasswordFieldTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setRegEmail("Testowy@test.com");
         myAccountPage.performRegister();
@@ -88,7 +87,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void registerWithWeakPasswordTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setRegEmail("Testowy@test.com");
         myAccountPage.setRegPassword("Testowy12");
@@ -101,7 +100,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithInvalidPasswordTest() {
-        init();
+        header.clickAccountButton();
 
         String login = "Testowy286@test.com";
 
@@ -115,7 +114,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithNonExistsUsernameTest() {
-        init();
+        header.clickAccountButton();
 
         String login = "Testowy286121@test.com";
 
@@ -128,7 +127,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithEmptyUsernameFieldTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.performLogin();
         Assert.assertEquals(myAccountPage.getErrorMessage(), "Error: Username is required.");
@@ -136,7 +135,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithEmptyPasswordFieldTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setUsername("Testowy286@test.com");
         myAccountPage.performLogin();
@@ -146,7 +145,7 @@ public class MyAccountTests extends BaseTests {
 
     @Test
     public void loginWithValidCredentialsTest() {
-        init();
+        header.clickAccountButton();
 
         myAccountPage.setUsername("Testowy286@test.com");
         myAccountPage.setPassword("Testowy286@test.com");
