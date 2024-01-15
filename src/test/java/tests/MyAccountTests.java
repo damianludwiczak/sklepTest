@@ -11,15 +11,6 @@ import java.util.Random;
 import static tests.DriverSingleton.getDriver;
 
 public class MyAccountTests extends BaseTests {
-    private MyAccountPage myAccountPage;
-    private LoggedMyAccountPage loggedMyAccountPage;
-    private Header header;
-
-    public MyAccountTests() {
-        myAccountPage = new MyAccountPage();
-        header = new Header();
-        loggedMyAccountPage = new LoggedMyAccountPage();
-    }
 
     @Test
     public void registerUserWithValidInputTest() {

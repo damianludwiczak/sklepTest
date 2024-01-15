@@ -8,17 +8,7 @@ import pages.SearchResultPage;
 import java.util.List;
 
 public class SearchTests extends BaseTests {
-    private SoftAssert softAssert;
-    private SearchResultPage searchResultPage;
-    private Header header;
-
-    public SearchTests() {
-        softAssert = new SoftAssert();
-        searchResultPage = new SearchResultPage();
-        header = new Header();
-    }
-
-    @Test
+     @Test
     public void isCorrectResultsDisplayedTest() {
         String keyword = "dress";
         header.setSearchInput(keyword);
