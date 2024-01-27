@@ -1,53 +1,65 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 import pages.Header;
-import pages.SearchResultPage;
+import pages.LoggedMyAccount;
+import pages.SearchResult;
 
 import java.util.List;
 
 public class SearchTests extends BaseTests {
-     @Test
+    @Test
     public void isCorrectResultsDisplayedTest() {
-        String keyword = "dress";
-        header.setSearchInput(keyword);
-        header.clickSearchButton();
+        Header header = new Header();
+        SearchResult searchResult = new SearchResult();
 
-        softAssert.assertTrue(searchResultPage.getSearchTitleText().contains(keyword.toUpperCase()),
+        String keyword = "dress";
+
+        header
+                .setSearchInput(keyword)
+                .clickSearchButton();
+
+        Assert.assertTrue(searchResult.getSearchTitleText().contains(keyword.toUpperCase()),
                 "Title doesn't contain keyword");
-        softAssert.assertTrue(searchResultPage.getSearchSubText().contains(keyword),
+        Assert.assertTrue(searchResult.getSearchSubText().contains(keyword),
                 "Subtitle doesn't contain keyword");
-        softAssert.assertTrue(isAllResultsContainKeyword(searchResultPage.getArticlesTitles(), keyword),
+        Assert.assertTrue(isAllResultsContainKeyword(searchResult.getArticlesTitles(), keyword),
                 "Not all result contains keyword");
-        softAssert.assertAll();
     }
 
     @Test
     public void searchWithEmptyKeywordFieldTest() {
-        header.setSearchInput("");
-        header.clickSearchButton();
+        Header header = new Header();
+        SearchResult searchResult = new SearchResult();
 
-        softAssert.assertTrue(searchResultPage.getSearchSubText().
+        header
+                .setSearchInput("")
+                .clickSearchButton();
+
+        Assert.assertTrue(searchResult.getSearchSubText().
                 equalsIgnoreCase("Search:"), "Subtitle isn't empty");
-        softAssert.assertTrue(searchResultPage.getSearchTitleText().
+        Assert.assertTrue(searchResult.getSearchTitleText().
                 equalsIgnoreCase("Search Results for:"), "Title isn't empty");
-        softAssert.assertTrue(searchResultPage.getArticlesTitles().get(0).contains("Checkout"),
+        Assert.assertTrue(searchResult.getArticlesTitles().get(0).contains("Checkout"),
                 "Wrong article is displayed");
-        softAssert.assertAll();
     }
 
     @Test
     public void searchWithKeywordWhichDoesNotFoundTest() {
+        Header header = new Header();
+        SearchResult searchResult = new SearchResult();
+        LoggedMyAccount loggedMyAccount = new LoggedMyAccount();
         String keyword = "test123";
-        header.setSearchInput(keyword);
-        header.clickSearchButton();
 
-        softAssert.assertTrue(searchResultPage.getSearchTitleText().equalsIgnoreCase("Nothing Found"),
+        header
+                .setSearchInput(keyword)
+                .clickSearchButton();
+
+        Assert.assertTrue(searchResult.getSearchTitleText().equalsIgnoreCase("Nothing Found"),
                 "Title is incorrect");
-        softAssert.assertTrue(searchResultPage.getSearchSubText().contains(keyword),
+        Assert.assertTrue(searchResult.getSearchSubText().contains(keyword),
                 "Subtitle doesn't contain keyword");
-        softAssert.assertAll();
     }
 
     private boolean isAllResultsContainKeyword(List<String> articlesTitles, String keyword) {

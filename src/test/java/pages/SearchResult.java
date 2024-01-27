@@ -1,16 +1,12 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static tests.DriverSingleton.getDriver;
-
-public class SearchResultPage {
+public class SearchResult extends BasePage {
     @FindBy(css = "span[class='breadcrumb-leaf']")
     private WebElement searchSub;
 
@@ -19,10 +15,6 @@ public class SearchResultPage {
 
     @FindBy(css = "article")
     private List<WebElement> listArticles;
-
-    public SearchResultPage() {
-        PageFactory.initElements(getDriver(), this);
-    }
 
     public String getSearchSubText() {
         return searchSub.getText();
@@ -33,6 +25,6 @@ public class SearchResultPage {
     }
 
     public List<String> getArticlesTitles() {
-       return listArticles.stream().map(WebElement::getText).collect(Collectors.toList());
+        return listArticles.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }

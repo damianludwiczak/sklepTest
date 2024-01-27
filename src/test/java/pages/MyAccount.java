@@ -1,17 +1,12 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import tests.BaseTests;
-import tests.DriverSingleton;
 
 import static tests.DriverSingleton.getDriver;
 
-public class MyAccountPage {
-    private WebDriver driver;
+public class MyAccount extends BasePage {
     private Actions actions;
     @FindBy(id = "username")
     private WebElement usernameInput;
@@ -21,12 +16,6 @@ public class MyAccountPage {
 
     @FindBy(name = "login")
     private WebElement loginButton;
-
-    @FindBy(id = "rememberme")
-    private WebElement rememberMeChceckbox;
-
-    @FindBy(css = "a[href='https://skleptest.pl/my-account/lost-password/']")
-    private WebElement lostPasswordLink;
 
     @FindBy(id = "reg_email")
     private WebElement regEmailInput;
@@ -40,51 +29,44 @@ public class MyAccountPage {
     @FindBy(xpath = "//article[@id='post-8']/div[2]/ul/li")
     private WebElement error;
 
-    @FindBy (css = "label[for='reg_password']")
+    @FindBy(css = "label[for='reg_password']")
     private WebElement regEmailLabel;
 
     @FindBy(css = "div[class='woocommerce-password-strength bad']")
     private WebElement regPasswordLabel;
 
-    public MyAccountPage() {
-        PageFactory.initElements(getDriver(), this);
-        this.driver = getDriver();
-        actions = new Actions(getDriver());
-    }
-
-    public void setUsername(String username) {
+    public MyAccount setUsername(String username) {
         usernameInput.sendKeys(username);
+        return this;
     }
 
-    public void setPassword(String password) {
+    public MyAccount setPassword(String password) {
         passwordInput.sendKeys(password);
+        return this;
     }
 
-    public void performLogin() {
+    public MyAccount performLogin() {
         loginButton.click();
+        return this;
     }
 
-    public void setRememberMeCheckBox(boolean condition) {
-        if (condition)
-            rememberMeChceckbox.click();
-    }
-
-    public void clickLostPassword() {
-        lostPasswordLink.click();
-    }
-
-    public void setRegEmail(String email) {
+    public MyAccount setRegEmail(String email) {
         regEmailInput.sendKeys(email);
+        return this;
     }
 
-    public void setRegPassword(String password) {
+    public MyAccount setRegPassword(String password) {
+        actions = new Actions(getDriver());
         actions.moveToElement(regPasswordInput).click().perform();
         regPasswordInput.sendKeys(password);
+        return this;
     }
 
-    public void performRegister() {
+    public MyAccount performRegister() {
+        actions = new Actions(getDriver());
         actions.moveToElement(regPasswordInput).click().perform();
         regButton.click();
+        return this;
     }
 
     public boolean isRegisterButtonAvailable() {

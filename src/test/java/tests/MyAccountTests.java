@@ -3,145 +3,205 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.Header;
-import pages.LoggedMyAccountPage;
-import pages.MyAccountPage;
+import pages.LoggedMyAccount;
+import pages.MyAccount;
 
 import java.util.Random;
 
-import static tests.DriverSingleton.getDriver;
-
 public class MyAccountTests extends BaseTests {
-
     @Test
     public void registerUserWithValidInputTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
+        LoggedMyAccount loggedMyAccount = new LoggedMyAccount();
+
+        header
+                .clickAccountButton();
 
         Random random = new Random();
 
         String username = "Testowy" + random.nextInt(10000);
-        myAccountPage.setRegEmail(username + "@test.com");
-        myAccountPage.setRegPassword(username + "@test.com");
-        myAccountPage.performRegister();
+        myAccount
+                .setRegEmail(username + "@test.com")
+                .setRegPassword(username + "@test.com")
+                .performRegister();
 
-        Assert.assertEquals(loggedMyAccountPage.getWelcomeSub(), username);
+        Assert.assertEquals(loggedMyAccount.getWelcomeSub(), username);
     }
 
     @Test
     public void registerWithEmailWhichDoesNotContainAtSignTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.setRegEmail("Testowy");
-        myAccountPage.performRegister();
+        header
+                .clickAccountButton();
 
-        Assert.assertTrue(myAccountPage.isRegEmailLabelTextDisplayed());
+        myAccount
+                .setRegEmail("Testowy")
+                .performRegister();
+
+        Assert.assertTrue(myAccount.isRegEmailLabelTextDisplayed());
     }
 
     @Test
     public void registerWithInvalidEmailTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.setRegEmail("Testowy@aaa");
-        myAccountPage.setRegPassword("Testowy@aaa");
-        myAccountPage.performRegister();
+        header
+                .clickAccountButton();
 
-        Assert.assertTrue(myAccountPage.getErrorMessage().contains(" Please provide a valid email address."));
+        myAccount
+                .setRegEmail("Testowy@aaa")
+                .setRegPassword("Testowy@aaa")
+                .performRegister();
+
+        Assert.assertTrue(myAccount.getErrorMessage().contains(" Please provide a valid email address."));
     }
 
     @Test
     public void registerWithEmptyEmailFieldTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.setRegPassword("Testowy123@");
-        myAccountPage.performRegister();
+        header
+                .clickAccountButton();
 
-        Assert.assertEquals(myAccountPage.getErrorMessage(), ("Error: Please provide a valid email address."));
+        myAccount
+                .setRegPassword("Testowy123@")
+                .performRegister();
+
+        Assert.assertEquals(myAccount.getErrorMessage(), ("Error: Please provide a valid email address."));
     }
 
     @Test
     public void registerWithEmptyAllFieldsTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.performRegister();
-        Assert.assertEquals(myAccountPage.getErrorMessage(), ("Error: Please provide a valid email address."));
+        header
+                .clickAccountButton();
+
+        myAccount
+                .performRegister();
+
+        Assert.assertEquals(myAccount.getErrorMessage(), ("Error: Please provide a valid email address."));
     }
 
 
     @Test
     public void registerWithEmptyPasswordFieldTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.setRegEmail("Testowy@test.com");
-        myAccountPage.performRegister();
+        header
+                .clickAccountButton();
 
-        Assert.assertTrue(myAccountPage.getErrorMessage().contains("Please enter an account password."));
+        myAccount
+                .setRegEmail("Testowy@test.com")
+                .performRegister();
+
+        Assert.assertTrue(myAccount.getErrorMessage().contains("Please enter an account password."));
     }
 
     @Test
     public void registerWithWeakPasswordTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.setRegEmail("Testowy@test.com");
-        myAccountPage.setRegPassword("Testowy12");
-        myAccountPage.performRegister();
+        header
+                .clickAccountButton();
 
-        Assert.assertTrue(myAccountPage.isRegPasswordLabelText() &
-                myAccountPage.getRegPasswordLabelText().contains("Weak - Please enter a stronger password.") &
-                !myAccountPage.isRegisterButtonAvailable());
+        myAccount
+                .setRegEmail("Testowy@test.com")
+                .setRegPassword("Testowy12")
+                .performRegister();
+
+        Assert.assertTrue(myAccount.isRegPasswordLabelText() &
+                myAccount.getRegPasswordLabelText().contains("Weak - Please enter a stronger password.") &
+                !myAccount.isRegisterButtonAvailable());
     }
 
     @Test
     public void loginWithInvalidPasswordTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
+
+        header
+                .clickAccountButton();
 
         String login = "Testowy286@test.com";
 
-        myAccountPage.setUsername(login);
-        myAccountPage.setPassword("Testowy286@test");
-        myAccountPage.performLogin();
+        myAccount
+                .setUsername(login)
+                .setPassword("Testowy286@test")
+                .performLogin();
 
-        Assert.assertTrue(myAccountPage.getErrorMessage().contains(" The password you entered for the username "
+        Assert.assertTrue(myAccount.getErrorMessage().contains(" The password you entered for the username "
                 + login + " is incorrect. "));
     }
 
     @Test
     public void loginWithNonExistsUsernameTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
+
+        header
+                .clickAccountButton();
 
         String login = "Testowy286121@test.com";
 
-        myAccountPage.setUsername(login);
-        myAccountPage.setPassword("Testowy286@test");
-        myAccountPage.performLogin();
+        myAccount
+                .setUsername(login)
+                .setPassword("Testowy286@test")
+                .performLogin();
 
-        Assert.assertTrue(myAccountPage.getErrorMessage().contains(" A user could not be found with this email address."));
+        Assert.assertTrue(myAccount.getErrorMessage().contains(" A user could not be found with this email address."));
     }
 
     @Test
     public void loginWithEmptyUsernameFieldTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.performLogin();
-        Assert.assertEquals(myAccountPage.getErrorMessage(), "Error: Username is required.");
+        header
+                .clickAccountButton();
+
+        myAccount
+                .performLogin();
+        Assert.assertEquals(myAccount.getErrorMessage(), "Error: Username is required.");
     }
 
     @Test
     public void loginWithEmptyPasswordFieldTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
 
-        myAccountPage.setUsername("Testowy286@test.com");
-        myAccountPage.performLogin();
+        header
+                .clickAccountButton();
 
-        Assert.assertEquals(myAccountPage.getErrorMessage(), "Error: The password field is empty.");
+        myAccount
+                .setUsername("Testowy286@test.com")
+                .performLogin();
+
+        Assert.assertEquals(myAccount.getErrorMessage(), "Error: The password field is empty.");
     }
 
     @Test
     public void loginWithValidCredentialsTest() {
-        header.clickAccountButton();
+        Header header = new Header();
+        MyAccount myAccount = new MyAccount();
+        LoggedMyAccount loggedMyAccount = new LoggedMyAccount();
 
-        myAccountPage.setUsername("Testowy286@test.com");
-        myAccountPage.setPassword("Testowy286@test.com");
-        myAccountPage.performLogin();
+        header
+                .clickAccountButton();
 
-        Assert.assertTrue(loggedMyAccountPage.getWelcomeSub().contains("Testowy286"));
+        myAccount
+                .setUsername("Testowy286@test.com")
+                .setPassword("Testowy286@test.com")
+                .performLogin();
+
+        Assert.assertTrue(loggedMyAccount.getWelcomeSub().contains("Testowy286"));
     }
 }
