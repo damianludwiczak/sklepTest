@@ -10,7 +10,7 @@ public class DriverSingleton {
     private DriverSingleton() {
     }
 
-    public static WebDriver getDriver() {  // TODO: 09.01.2024
+    public static WebDriver getDriver() {
         if (driver == null) {
             System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
             driver = new ChromeDriver();
